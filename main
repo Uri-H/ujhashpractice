@@ -1,3 +1,83 @@
 //Practice for Hash Code
 //pizza problem
-//code goes here
+
+
+class Pizza{
+  int toppings;//number of toppings
+  string[]toppingNames;//list of all the toppings
+}
+
+int remainingPizzasNumber;
+string[][] remainingPizzas;//2d array of pizza. i is the pizza number. j is the j-th topping.
+sort remainingPizzas with most toppings at top of list;
+int[][] pizzaPerGroup;//2d array of pizza. i is the team number. j is the pizza number they are getting
+
+int groupsSizeTwo;
+int groupsSizeThree;
+int groupsSizeFour;
+int[groupsSizeTwo+groupsSizeThree+groupsSizeFour] teamSizes; //this array will look like 2,2,2,3,4,4,4,4,4
+for(int i=0;i<groupsSizeTwo;i++){
+  teamSizes[i] = 2;
+}
+for(int i=groupsSizeTwo;i<groupsSizeTwo+groupsSizeThree;i++){
+  teamSizes[i] = 3;
+}
+for(int i=groupsSizeTwo+groupsSizeThree;i<groupsSizeTwo+groupsSizeThree+groupsSizeFour;i++){
+  teamSizes[i] = 4;
+}
+
+int team = 0;
+
+while(remaingPizzasNumber>0){
+  //find pizza with most toppings remaing. should be at top of array. make array a vector or java equivalent so this will always be the 0th element, maybe a stack or queue
+  pizzaPerGroup[team][0] = remainingPizzas.pop(0);//take the biggest pizza off the stack and assign it to the next team
+  for(j=1;j<teamSizes[team];j++){
+    pizzaPerGroup[team][j] = maxToppingPizza(pizzaPerGroup,remainingPizzas)
+    remainingPizzas--//just do this in call by reference
+  }
+  team++;
+}
+
+Pizza compare(remainingPizzas[i], pizzaPerGroup){
+  new list;
+  //add all existing pizza toppings from pizzaPerGroup[team][] to hash
+  for(i=0;i<teamSizes[team]-pizzas not yet allotted;i++){//for each existingpizza on the team
+    for(all the toppings per pizza){
+    if(topping does not yet exist in hash){
+    list.add(toppingName);//doesn't need a hash could just be a list
+    }
+    }
+  }
+  Pizza bestPizza;
+  int maxToppings = 0;//this number will be helpful to know our score later
+  int toppingCount = 0;
+  for(i through remainingPizzaNumber){
+    for(j through toppings on each pizza){
+    if(remainingPizzas[i].topping[j] is not in the list) toppingCount++;
+    }
+    if(toppingCount>maxToppings){
+    maxToppings = toppingCount;
+    bestPizza = remainingPizzas[i];
+    toppingCount = 0;
+  }
+return bestPizza;
+
+
+}
+
+
+
+
+
+//this next part is useless
+Pizza maxToppingPizza(pizzaPerGroup,remainingPizzas){
+maxToppings = 0;
+for(i=0;i<remainingPizzasNumber;i++){
+    Pizza comparisonPizzaResult = compare(remainingPizzas[i], pizzaPerGroup);
+    if(comparisonPizzaResult.toppings>maxToppings){
+    maxToppings = comparisonPizzaResult.toppings; //this will help us find the score but is useless for the algorithm
+    bestPizzaAddedToOrder = comparisonPizzaResult //this we need to find to assign to our ppg array
+    }
+  }
+  return bestPizzaAddedToOrder;
+}
