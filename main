@@ -9,6 +9,7 @@ class Pizza{
 
 int remainingPizzasNumber;
 string[][] remainingPizzas;//2d array of pizza. i is the pizza number. j is the j-th topping.
+HashMap<Integer, List<String>> remainingPizzas = new HashMap<Integer, List<String>>();//the key is the pizza number and the value is a list of toppings. how many toppings can be determined by taking length of the list
 sort remainingPizzas with most toppings at top of list;
 int[][] pizzaPerGroup;//2d array of pizza. i is the team number. j is the pizza number they are getting
 
