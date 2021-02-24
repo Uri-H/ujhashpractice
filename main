@@ -1,6 +1,7 @@
 //Practice for Hash Code
 //pizza problem
-
+#include <tuple>
+#include <vector>
 
 class Pizza{
   int toppings;//number of toppings
@@ -9,9 +10,19 @@ class Pizza{
 
 int remainingPizzasNumber;
 string[][] remainingPizzas;//2d array of pizza. i is the pizza number. j is the j-th topping.
-HashMap<Integer, List<String>> remainingPizzas = new HashMap<Integer, List<String>>();//the key is the pizza number and the value is a list of toppings. how many toppings can be determined by taking length of the list
+//HashMap<Integer, List<String>> remainingPizzas = new HashMap<Integer, List<String>>();//the key is the pizza number and the value is a list of toppings. how many toppings can be determined by taking length of the list
 sort remainingPizzas with most toppings at top of list;
 int[][] pizzaPerGroup;//2d array of pizza. i is the team number. j is the pizza number they are getting
+
+
+vector<tuple<int, vector<string>>> get_student(int id)
+{
+    if (id == 0) return std::make_tuple(3.8, 'A', "Lisa Simpson");
+    if (id == 1) return std::make_tuple(2.9, 'C', "Milhouse Van Houten");
+    if (id == 2) return std::make_tuple(1.7, 'D', "Ralph Wiggum");
+    throw std::invalid_argument("id");
+}
+
 
 int groupsSizeTwo;
 int groupsSizeThree;
