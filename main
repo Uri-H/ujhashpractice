@@ -1,95 +1,173 @@
-//Practice for Hash Code
-//pizza problem
-#include <tuple>
-#include <vector>
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.*; 
+import java.util.*; 
+import java.util.ArrayList;
 
-class Pizza{
-  int toppings;//number of toppings
-  string[]toppingNames;//list of all the toppings
-}
-
-int remainingPizzasNumber;
-string[][] remainingPizzas;//2d array of pizza. i is the pizza number. j is the j-th topping.
-//HashMap<Integer, List<String>> remainingPizzas = new HashMap<Integer, List<String>>();//the key is the pizza number and the value is a list of toppings. how many toppings can be determined by taking length of the list
-sort remainingPizzas with most toppings at top of list;
-int[][] pizzaPerGroup;//2d array of pizza. i is the team number. j is the pizza number they are getting
-
-
-vector<tuple<int, vector<string>>> get_student(int id)
-{
-    if (id == 0) return std::make_tuple(3.8, 'A', "Lisa Simpson");
-    if (id == 1) return std::make_tuple(2.9, 'C', "Milhouse Van Houten");
-    if (id == 2) return std::make_tuple(1.7, 'D', "Ralph Wiggum");
-    throw std::invalid_argument("id");
-}
-
-
-int groupsSizeTwo;
-int groupsSizeThree;
-int groupsSizeFour;
-int[groupsSizeTwo+groupsSizeThree+groupsSizeFour] teamSizes; //this array will look like 2,2,2,3,4,4,4,4,4
-for(int i=0;i<groupsSizeTwo;i++){
-  teamSizes[i] = 2;
-}
-for(int i=groupsSizeTwo;i<groupsSizeTwo+groupsSizeThree;i++){
-  teamSizes[i] = 3;
-}
-for(int i=groupsSizeTwo+groupsSizeThree;i<groupsSizeTwo+groupsSizeThree+groupsSizeFour;i++){
-  teamSizes[i] = 4;
-}
-
-int team = 0;
-
-while(remaingPizzasNumber>0){
-  //find pizza with most toppings remaing. should be at top of array. make array a vector or java equivalent so this will always be the 0th element, maybe a stack or queue
-  pizzaPerGroup[team][0] = remainingPizzas.pop(0);//take the biggest pizza off the stack and assign it to the next team
-  for(j=1;j<teamSizes[team];j++){
-    pizzaPerGroup[team][j] = maxToppingPizza(pizzaPerGroup,remainingPizzas)
-    remainingPizzas--//just do this in call by reference
-  }
-  team++;
-}
-
-Pizza compare(remainingPizzas[i], pizzaPerGroup){
-  new list;
-  //add all existing pizza toppings from pizzaPerGroup[team][] to hash
-  for(i=0;i<teamSizes[team]-pizzas not yet allotted;i++){//for each existingpizza on the team
-    for(all the toppings per pizza){
-    if(topping does not yet exist in hash){
-    list.add(toppingName);//doesn't need a hash could just be a list
+public class ReadFile {
+	public static void main(String[] args) {
+    	File myObj = new File("pizzaInfo.txt");
+    	String[][] b = ReadFileHere(myObj);
+    	//for(int i=0;i<3;i++) {
+    	//	for(int j=0;j<3;j++) {
+    	//		System.out.println(b[i][j]);
+    			
+    	//	}
+    	//}
+    	System.out.println("Hi");
     }
+	
+	public static String[][] ReadFileHere(File myObj){
+	int count = 0;
+	int max = 0;
+	int numberOfPizzas;
+	String[][] pizzaData= new String[0][0];
+    try {
+      //File myObj = new File("pizzaInfo.txt");
+      Scanner myReader = new Scanner(myObj);
+      String firstLine = myReader.nextLine();
+      //int pizzas = Character.getNumericValue(firstLine.charAt(0));
+      String[] lineOne = firstLine.split("\\s+");
+      int[] firstOneLine = new int[4];
+      for(int i = 0; i<4;i++) {
+    	  firstOneLine[i] = Integer.parseInt(lineOne[i]);
+    	  System.out.println(firstOneLine[i]);
+      }
+      while (myReader.hasNextLine()) {
+    	  String myData = myReader.nextLine();
+    	  String[] myDataSplit = myData.split("\\s+");
+    	  if(myDataSplit.length>max) {
+    		  max = myDataSplit.length;
+    	  }
+      }
+      myReader.close();
+      System.out.println(max);
+      max = max + 1;
+      numberOfPizzas = firstOneLine[0];
+      Scanner myReaderTwo = new Scanner(myObj);
+      myReaderTwo.nextLine();
+      pizzaData = new String[numberOfPizzas][max];
+      while (myReaderTwo.hasNextLine()&&count!=numberOfPizzas) {
+        String data = myReaderTwo.nextLine();
+        String[] splitData = data.split("\\s+");
+        pizzaData[count][0] = String.valueOf(count);
+        for(int i=0;i<splitData.length;i++) {
+        	pizzaData[count][i+1] = splitData[i];
+        	System.out.print(pizzaData[count][i+1]);
+        }
+        count++;
+        System.out.println("\n");
+      }
+      myReaderTwo.close();
+      String temp;
+      int valueOne;
+      int valueTwo;
+      //String[][] sortedPizzaData = new String[numberOfPizzas][max];
+      for(int k=0;k<numberOfPizzas;k++) {
+      for(int i=0;i<numberOfPizzas-1;i++) {
+      	valueOne = Integer.parseInt(pizzaData[i][1]);
+  		valueTwo = Integer.parseInt(pizzaData[i+1][1]);
+  		if(valueOne<valueTwo) {
+      	for(int j=0;j<max;j++) {
+      			temp = pizzaData[i][j];
+      			pizzaData[i][j] = pizzaData[i+1][j];
+      			pizzaData[i+1][j] = temp;
+      		}
+      	}
+      }
+      }
+      for(int i=0;i<numberOfPizzas;i++) {
+  		for(int j=0;j<max;j++) {
+  			if(pizzaData[i][j]!=null) System.out.print(pizzaData[i][j]);
+  			System.out.print(" ");
+  		}
+  		System.out.print("\n");	
+  	}
+      int[] teamCounter = firstOneLine;
+      int[][] solutionArray = new int[(numberOfPizzas/2)+1][5];
+      ArrayList<String[]> v = new ArrayList<String[]>(numberOfPizzas);
+      for(int i=0;i<numberOfPizzas;i++) {
+    		for(int j=0;j<max;j++) {
+    			v.add(i,pizzaData[i]);
+    		}
+    		System.out.println(v.size());
+   }
+   //   for(int i=0;i<numberOfPizzas;i++) {
+   // 	  for(int j=0;j<max;j++) {
+  //			System.out.print(v.get(i)[j]);
+  //    }
+  //    }
+   int maxToppings=0;
+   int toppingsCount = 0;
+   int bestPizzaIndex = 0;
+   int howManyOrders = 0;
+   ArrayList<String> addedPizzas = new ArrayList<String>();
+   String[] bestPizza;
+   String[][] pizzaMemory = new String[4][max];
+   int pizzaCounter = 0;
+   for(int n=1;n<4;n++) {
+		  while((teamCounter[0]>=n+1)&&(teamCounter[n]>0)) {//after completing an order check that there are enough pizzas
+			  //left for another order and check that that there is a team left of the current size
+			  //if the pizzas insufficient this fails and the for loop ends
+			  //if the issue is the team size, then this while loop will be checked twice and probably run the second time
+			  //when there is a new team size available
+    	  solutionArray[howManyOrders+1][0] = n+1;//n+1 is the team size
+    	  solutionArray[howManyOrders+1][1] = Integer.parseInt(v.get(0)[0]);
+    	  for(int i=2;i<max-2;i++) {
+    		  addedPizzas.add(v.get(0)[i]);//adds the toppings to addedPizzas
+    	  }
+    	  //pizzaMemory[pizzaCounter] = v.get(0);
+    	  pizzaCounter++;
+    	  v.remove(0);
+    	  teamCounter[0]--;
+    	  while(pizzaCounter<n+1) {
+    	  for(int i=0;i<teamCounter[0];i++) {
+    		    	  for(int j=0;j<addedPizzas.size();j++) {
+    		    		  for(int k=2;k<max;k++) {
+    		  			if(addedPizzas.get(j)==v.get(i)[k]) toppingsCount++;
+    		      }
+    	  }   
+    		    	  if(toppingsCount>=maxToppings) {
+    	    		    	maxToppings = toppingsCount;
+    	    		    	bestPizza = v.get(i);//best pizza is stored
+    	    		    	bestPizzaIndex = i;
+    	    		    }
+      }
+    	  for(int i=2;i<max-2;i++) {
+    		  addedPizzas.add(v.get(bestPizzaIndex)[i]);//adds the toppings to addedPizzas
+    	  }
+    	  solutionArray[howManyOrders+1][pizzaCounter] = Integer.parseInt(v.get(bestPizzaIndex)[0]);
+    	  System.out.print(v.get(bestPizzaIndex)[0]);
+	      v.remove(bestPizzaIndex);
+	      maxToppings=0;
+	      teamCounter[0]--;
+	      teamCounter[n]--;
+	      pizzaCounter++;
+    	  //solutionArray[][];
+		  //v.get(0)[j];
+    	  }
+    	  pizzaCounter = 0;
+    	  howManyOrders++;
     }
-  }
-  Pizza bestPizza;
-  int maxToppings = 0;//this number will be helpful to know our score later
-  int toppingCount = 0;
-  for(i through remainingPizzaNumber){
-    for(j through toppings on each pizza){
-    if(remainingPizzas[i].topping[j] is not in the list) toppingCount++;
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+      return pizzaData;
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+      return pizzaData;
     }
-    if(toppingCount>maxToppings){
-    maxToppings = toppingCount;
-    bestPizza = remainingPizzas[i];
-    toppingCount = 0;
-  }
-return bestPizza;
-
-
+    
 }
-
-
-
-
-
-//this next part is useless
-Pizza maxToppingPizza(pizzaPerGroup,remainingPizzas){
-maxToppings = 0;
-for(i=0;i<remainingPizzasNumber;i++){
-    Pizza comparisonPizzaResult = compare(remainingPizzas[i], pizzaPerGroup);
-    if(comparisonPizzaResult.toppings>maxToppings){
-    maxToppings = comparisonPizzaResult.toppings; //this will help us find the score but is useless for the algorithm
-    bestPizzaAddedToOrder = comparisonPizzaResult //this we need to find to assign to our ppg array
-    }
-  }
-  return bestPizzaAddedToOrder;
 }
