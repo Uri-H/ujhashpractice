@@ -102,6 +102,7 @@ public class ReadFile {
    int toppingsCount = 0;
    int bestPizzaIndex = 0;
    int howManyOrders = 0;
+   Boolean goodTopping = true;
    ArrayList<String> addedPizzas = new ArrayList<String>();
    String[] bestPizza;
    String[][] pizzaMemory = new String[4][max];
@@ -113,9 +114,11 @@ public class ReadFile {
 			  //if the issue is the team size, then this while loop will be checked twice and probably run the second time
 			  //when there is a new team size available
     	  solutionArray[howManyOrders+1][0] = n+1;//n+1 is the team size
+    	  System.out.print(n+1);
     	  solutionArray[howManyOrders+1][1] = Integer.parseInt(v.get(0)[0]);
-    	  for(int i=2;i<max-2;i++) {
-    		  addedPizzas.add(v.get(0)[i]);//adds the toppings to addedPizzas
+    	  System.out.print(solutionArray[howManyOrders+1][1]);
+    	  for(int i=2;i<max;i++) {
+    		  if(v.get(0)[i]!=null)addedPizzas.add(v.get(0)[i]);//adds the toppings to addedPizzas
     	  }
     	  //pizzaMemory[pizzaCounter] = v.get(0);
     	  pizzaCounter++;
@@ -123,35 +126,51 @@ public class ReadFile {
     	  teamCounter[0]--;
     	  while(pizzaCounter<n+1) {
     	  for(int i=0;i<teamCounter[0];i++) {
+    		  for(int k=2;k<max;k++) { 
     		    	  for(int j=0;j<addedPizzas.size();j++) {
-    		    		  for(int k=2;k<max;k++) {
-    		  			if(addedPizzas.get(j)==v.get(i)[k]) toppingsCount++;
+    		    		  //System.out.println("%" + addedPizzas.size() + "%");
+    		    			  //System.out.println("*" + addedPizzas.get(j) + v.get(i)[k] + "*");
+    		  			if(addedPizzas.get(j).equals(v.get(i)[k])||v.get(i)[k]==null) { 
+    		  			goodTopping = false;
+    		  			}
+    		  			
     		      }
+    		    		if(goodTopping==true) {//all the toppings from the first pizza have been checked against the second pizza
+      		  				toppingsCount++;//if goodTopping survived we can add the topping from the second pizza to our count
+      		  			//System.out.println("\n&" + toppingsCount + "&");
+      		  			}
+    		    		goodTopping = true;//reset it for the next topping on the second pizza
     	  }   
-    		    	  if(toppingsCount>=maxToppings) {
+    		    	  if(toppingsCount>maxToppings || maxToppings==0) {
     	    		    	maxToppings = toppingsCount;
     	    		    	bestPizza = v.get(i);//best pizza is stored
     	    		    	bestPizzaIndex = i;
-    	    		    }
+    	    		  }
+    		    	  toppingsCount = 0;
+    		    	  
       }
-    	  for(int i=2;i<max-2;i++) {
-    		  addedPizzas.add(v.get(bestPizzaIndex)[i]);//adds the toppings to addedPizzas
+    	  for(int i=2;i<max;i++) {
+    		  if(v.get(0)[i]!=null) addedPizzas.add(v.get(bestPizzaIndex)[i]);//adds the toppings to addedPizzas
     	  }
     	  solutionArray[howManyOrders+1][pizzaCounter] = Integer.parseInt(v.get(bestPizzaIndex)[0]);
     	  System.out.print(v.get(bestPizzaIndex)[0]);
 	      v.remove(bestPizzaIndex);
 	      maxToppings=0;
 	      teamCounter[0]--;
-	      teamCounter[n]--;
 	      pizzaCounter++;
     	  //solutionArray[][];
 		  //v.get(0)[j];
     	  }
+    	  teamCounter[n]--;
     	  pizzaCounter = 0;
     	  howManyOrders++;
+    	  addedPizzas.clear();
+    	  addedPizzas.trimToSize();
+    	  System.out.println();
     }
    }
-   
+   solutionArray[0][0] = howManyOrders;
+   System.out.print(howManyOrders);
    
    
    
