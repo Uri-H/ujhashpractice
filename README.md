@@ -1,2 +1,2 @@
-# ujhashpractice
-uri and jacob practicing for hash code
+# ujhashsolutions
+uri and jacob solutions for hash code
